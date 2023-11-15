@@ -50,14 +50,16 @@ function App() {
       <div className="container">
         <div className="top">
           <div className="icon">
-            {data.weather && data.weather[0].icon && weatherIcons[data.weather[0].description] && (
+            {data.weather && (
               <img
-                src={weatherIcons[data.weather[0].icon.slice(-1) === 'd' ? 'clear sky' : data.weather[0].description].day}
-                alt={data.weather[0].description}
+                src={
+                  data.weather[0].icon.includes('d')
+                    ? weatherIcons[data.weather[0].description].day
+                    : weatherIcons[data.weather[0].description].night
+                }
+                alt={data.weather[0].icon.includes('d') ? `${data.weather[0].description} Day` : `${data.weather[0].description} Night`}
               />
-
             )}
-
           </div>
           <div className="location">
             <p>{data.name}</p>
