@@ -3,25 +3,29 @@ import axios from "axios";
 import brokenclouds from './assets/icons/brokenclouds.png'
 import clearday from './assets/icons/clearday.png'
 import clearnight from './assets/icons/clearnight.png'
-import clouds from './assets/icons/clouds.png'
+import cloudsday from './assets/icons/cloudsday.png'
+import cloudsnight from './assets/icons/cloudsnight.png'
 import fewcloudsday from './assets/icons/fewcloudsday.png'
 import fewcloudsnight from './assets/icons/fewcloudsnight.png'
-import mist from './assets/icons/mist.png'
+import mistday from './assets/icons/mistday.png'
+import mistnight from './assets/icons/mistnight.png'
 import rainday from './assets/icons/rainday.png'
 import rainnight from './assets/icons/rainnight.png'
 import showerrain from './assets/icons/showerrain.png'
-import snow from './assets/icons/snow.png'
+import snowday from './assets/icons/snowday.png'
+import snownight from './assets/icons/snownight.png'
 import thunderstorm from './assets/icons/thunderstorm.png'
 
 const weatherIcons = {
   'clear sky': { day: clearday, night: clearnight },
   'few clouds': { day: fewcloudsday, night: fewcloudsnight },
-  'scattered clouds': { day: clouds, night: clouds },
+  'overcast clouds': { day: fewcloudsday, night: fewcloudsnight },
+  'scattered clouds': { day: cloudsday, night: cloudsnight },
   'broken clouds': { day: brokenclouds, night: brokenclouds },
-  'mist': { day: mist, night: mist },
-  'light rain': { day: rainday, night: rainnight },
+  'mist': { day: mistday, night: mistnight },
+  'rain': { day: rainday, night: rainnight },
   'shower rain': { day: showerrain, night: showerrain },
-  'snow': { day: snow, night: snow },
+  'snow': { day: snowday, night: snownight },
   'thunderstorm': { day: thunderstorm, night: thunderstorm },
 };
 
@@ -54,8 +58,9 @@ function App() {
               <img
                 src={
                   data.weather[0].icon.includes('d')
-                    ? weatherIcons[data.weather[0].description].day
-                    : weatherIcons[data.weather[0].description].night
+                  ? weatherIcons[data.weather[0].icon?.includes('d') ? 'clear sky' : data.weather[0].description]?.day
+                  : weatherIcons[data.weather[0].icon?.includes('d') ? 'clear sky' : data.weather[0].description]?.night
+                
                 }
                 alt={data.weather[0].icon.includes('d') ? `${data.weather[0].description} Day` : `${data.weather[0].description} Night`}
               />
