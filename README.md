@@ -34,6 +34,6 @@ This is a simple weather application that displays current weather information f
 
 6. Open your browser and visit http://localhost:3000 to see the Weather App.
 
-##Acknowledgments
+## Acknowledgments
 Weather icons by OpenWeatherMap
 Background images from Unsplash
