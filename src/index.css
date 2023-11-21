@@ -41,6 +41,15 @@ h1 {
   z-index: -1;
 }
 
+.weather-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
 .app .search {
   text-align: center;
   padding: 1rem;

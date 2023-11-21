@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 //Thunderstorm
@@ -25,6 +25,28 @@ import scatteredcloudsnight from './assets/icons/03n.png'
 import brocenovercastday from './assets/icons/04d.png'
 import brocenovercastnight from './assets/icons/04d.png'
 
+//Background
+import thunderstormday from './assets/thunderstormday.webp'
+import thunderstormnight from './assets/thunderstormnight.webp'
+import drizzleday from './assets/drizzleday.webp'
+import drizzlenight from './assets/drizzlenight.webp'
+import rainyday from './assets/rainday.webp'
+import rainynight from './assets/rainnight.webp'
+import snowyday from './assets/snowyday.webp'
+import snowynight from './assets/snowynight.webp'
+import cleadaybg from './assets/cleardaybg.webp'
+import clearnightbg from './assets/clearnightbg.webp'
+import cloudsdaybg from './assets/cloudsdaybg.webp'
+import cloudsnightbg from './assets/cloudsnightbg.webp'
+import mistbg from './assets/mistbg.jpg'
+import smokebg from './assets/smokebg.jpg'
+import hazebg from './assets/hazebg.jpg'
+import dustbg from './assets/dustbg.jpg'
+import fogbg from './assets/fogbg.jpg'
+import sandbg from './assets/dustbg.jpg'
+import ashbg from './assets/ashbg.jpg'
+import sqallbg from './assets/squallbg.jpg'
+import tornadonbg from './assets/tornadobg.jpg'
 
 const weatherIcons = {
   //Thunderstorm
@@ -91,12 +113,36 @@ const weatherIcons = {
   'overcast clouds': { day: brocenovercastday, night: brocenovercastnight },
 };
 
+const background = {
+  'Thunderstorm': { day: thunderstormday, night: thunderstormnight },
+  'Drizzle': { day: drizzleday, night: drizzlenight },
+  'Rain': { day: rainyday, night: rainynight },
+  'Snow': { day: snowyday, night: snowynight },
+  'Clear': { day: cleadaybg, night: clearnightbg },
+  'Clouds': { day: cloudsdaybg, night: cloudsnightbg },
+  'Mist': { day: mistbg, night: mistbg },
+  'Smoke': { day: smokebg, night: smokebg },
+  'Haze': { day: hazebg, night: hazebg },
+  'Dust': { day: dustbg, night: dustbg },
+  'Fog': { day: fogbg, night: fogbg },
+  'Sand': { day: sandbg, night: sandbg },
+  'Ash': { day: ashbg, night: ashbg },
+  'Squall': { day: sqallbg, night: sqallbg },
+  'Tornado': { day: tornadonbg, night: tornadonbg },  
+};
 
 function App() {
   const [data, setData] = useState({})
   const [location, setLocation] = useState('')
+  const [currentBackground, setCurrentBackground] = useState("sunset.jpg");
+
 
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=a6c12f7946894f3aaa4b7f611908f739`
+
+  useEffect(() => {
+    const initialBackground = "sunset.jpg";
+    setCurrentBackground(initialBackground);
+  }, []);
 
   const searchLocation = (event) => {
     if (event.key === 'Enter') {
@@ -110,6 +156,24 @@ function App() {
 
   return (
     <div className="app">
+      <div className="background">
+        {data.weather && (
+          <img
+            src={
+              data.weather[0].icon.endsWith("d")
+                ? background[data.weather[0].main]?.day
+                : background[data.weather[0].main]?.night
+            }
+            alt={
+              data.weather[0].icon.endsWith("d")
+                ? `${data.weather[0].main} Day`
+                : `${data.weather[0].main} Night`
+            }
+            className="weather-background"
+          />
+        )}
+      </div>
+
       <div className="search">
         <input value={location} onChange={event => setLocation(event.target.value)} onKeyDown={searchLocation} placeholder='Enter location' type="text"></input>
       </div>
@@ -130,7 +194,6 @@ function App() {
                 }
               />
             )}
-
           </div>
           <div className="location">
             <p>{data.name}</p>
